@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  PL1AnimationDemoViewController.h
 //  iPhogAmination
 //
 //  Created by Nikolay Shubenkov on 25/07/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface PL1AnimationDemoViewController : UIViewController
 
 @end
-
