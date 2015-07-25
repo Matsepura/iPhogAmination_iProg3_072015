@@ -24,13 +24,38 @@
     // Do any additional setup after loading the view.
 }
 
+//Анимацию не стоит начинать раньше вызова этого метода
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self showSimpleAnimation];
 }
 
+#pragma mark - UI Events
+
+- (IBAction)randomButtonPressed:(UIButton *)sender
+{
+    [self showRandomAnimation];
+}
+
 #pragma mark - Animation
+
+- (void)showRandomAnimation
+{
+    [UIView animateWithDuration:1
+                     animations:^{
+                         self.view1.frame = [self randomRect];
+                         self.view1.alpha = [self randomAlpha];
+                         
+                         self.view2.frame = [self randomRect];
+                         self.view2.alpha = [self randomAlpha];
+                         
+                         self.view2Subview.frame = [self randomRect];
+                         self.view2Subview.alpha = [self randomAlpha];
+                     } completion:^(BOOL finished) {
+                         self.view.backgroundColor = [UIColor whiteColor];
+                     }];
+}
 
 - (void)showSimpleAnimation
 {
@@ -50,8 +75,48 @@
     }];
 }
 
+- (CGRect)randomRect
+{
+    CGRect rect;
+    rect.origin = [self randomPointWithMinX:0 maxX:250 minY:0 maxY:300];
+    rect.size   = [self randomSizeWithMinWidth:40 maxWidth:200 minHeight:10 maxHeight:400];
+    return rect;
+}
 
+- (CGSize)randomSizeWithMinWidth:(CGFloat)minWidth maxWidth:(CGFloat)maxWidth minHeight:(CGFloat)minHeight maxHeight:(CGFloat)maxHeight
+{
+    return CGSizeMake([self randomValueFromMin:minWidth toMax:maxWidth],
+                      [self randomValueFromMin:minHeight toMax:maxHeight]);
+}
 
+- (CGPoint)randomPointWithMinX:(CGFloat)minX maxX:(CGFloat)maxX minY:(CGFloat)minY maxY:(CGFloat)maxY
+{
+    CGPoint point = CGPointZero;
+    
+    point = CGPointMake([self randomValueFromMin:minX toMax:maxX],
+                        [self randomValueFromMin:minY toMax:maxY]);
+    
+    return point;
+}
+
+- (CGFloat)randomAlpha
+{
+    int maxValue = 100;
+    return (CGFloat)[self randomValueFromMin:0 toMax:maxValue] / maxValue;
+}
+
+- (int)randomValueFromMin:(int)min toMax:(int)max
+{
+    NSParameterAssert(max > min);
+    
+    int range = max - min;
+    
+    int randomValueInRange = arc4random_uniform(range);
+    
+    int result = randomValueInRange + min;
+    
+    return result;
+}
 
 
 @end
