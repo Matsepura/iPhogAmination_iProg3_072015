@@ -37,12 +37,12 @@
 
 -(void)showSimpleAnimation{
     [UIView animateWithDuration:0.7 animations:^{
-        self.view1.center = CGPointMake(222, 440);
+        self.view1.center = CGPointMake(222, 44);
         self.view1.alpha = 0;
         self.view1.backgroundColor = [UIColor purpleColor];
         
         self.view2.alpha = 0.1;
-        self.view2.center = CGPointMake(10, 500);
+        self.view2.center = CGPointMake(900, 500);
         self.view2.backgroundColor = [UIColor greenColor];
         
         CGRect newView2SubviewFrame = CGRectMake(200, -60, 150, 6);
@@ -52,14 +52,37 @@
 }
 
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(CGPoint)randomPointWithMinX:(CGFloat)minX maxX:(CGFloat)maxX minY:(CGFloat)minY maxY:(CGFloat)maxY
+{
+    CGPoint point = CGPointZero;
+    
+    point = CGPointMake([self randomValueFromMinValue:minX toMax:maxX],
+                        [self randomValueFromMinValue:minY toMax:maxY]);
+    
+    
+    return point;
 }
-*/
+
+-(CGFloat)randomAplha
+{
+    int maxValue = 100;
+    return (CGFloat)[self randomValueFromMinValue:0 toMax:maxValue] / maxValue;
+}
+
+
+-(NSInteger)randomValueFromMinValue:(NSInteger)min toMax:(NSInteger)max
+{
+    NSParameterAssert(max > min);
+    NSInteger maxPoint = max - min;
+    NSInteger randomValue = (NSInteger)arc4random_uniform((NSInteger)maxPoint) + min;
+    NSLog(@"%ld", randomValue);
+    return randomValue;
+
+}
+
+
+
+
 
 @end
